@@ -1,0 +1,22 @@
+.list {
+  display: block;
+}
+
+.list__container {
+  background: black;
+  color: #d8d8d8;
+  font-family: "Avenir Next";
+  font-size: 26px;
+  list-style-type: none;
+  padding: 0px;
+}
+
+.list__item {
+  border: 1px solid #8b8b8b;
+  padding: 15px;
+}
+
+.list__group {
+  background: rgb(48, 47, 47);
+  color: #c6e5ec;
+}
