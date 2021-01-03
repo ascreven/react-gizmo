@@ -1,0 +1,22 @@
+@import "../../styles/libraries";
+
+.card {
+  font-weight: 600;
+  .card-img-overlay{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card-title {
+    font-size: 1.5rem;
+  }
+  .card__subtitle {
+    text-transform: uppercase;
+  }
+  .badge {
+    padding: 16px;
+  }
+  .card__genre {
+    font-size: $font-size-sm;
+  }
+}
