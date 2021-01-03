@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import movies from "./mock/movies.mock";
 import Card from "./shared/Card";
 import List from "./shared/List";
