@@ -1,3 +1,4 @@
+import React from "react";
 import "./List.scss";
 
 function List(props: any) {
@@ -7,7 +8,7 @@ function List(props: any) {
         <li className="list-group-item list-group-item-title">{props.title}</li>
         {props.items.map((item: any) => (
           <li className="list-group-item" key={item.id}>
-            {item.title}
+            {item.name}
           </li>
         ))}
       </ul>

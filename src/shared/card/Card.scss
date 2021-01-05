@@ -9,6 +9,7 @@
   }
   .card-title {
     font-size: 1.5rem;
+    margin: auto 0;
   }
   .card__subtitle {
     text-transform: uppercase;
@@ -18,5 +19,9 @@
   }
   .card__genre {
     font-size: $font-size-sm;
+  }
+  .card__header {
+    display: flex;
+    flex-direction: column;
   }
 }
