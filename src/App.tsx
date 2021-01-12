@@ -1,35 +1,24 @@
 import React from "react";
-import "./App.scss";
-import movies from "./mock/movies.mock";
-import genres from "./mock/genres.mock";
-import Card from "./shared/card/Card";
-import List from "./shared/list/List";
-import MovieDetail from "./shared/moviedetail/MovieDetail";
-import {find} from "lodash";
+import {
+  BrowserRouter,
+  Route,
+  Switch
+} from "react-router-dom";
+import MovieDetail from "./movies/movie-detail/movie-detail";
 
+import "./App.scss";
+import Home from "./pages/Home";
 
 function App() {
-  const findGenre = (id:  Number) => {
-    const genre = find(genres, ['id', id]);
-    return genre ? genre.name : null;
-  };
-
   return (
-    <div className="container-fluid">
-      <div className="row">
-        {movies.map((movie: any) => (
-          <div className="col-3">
-            <Card title={movie.title} score={movie.vote_average} genre={findGenre(movie.genre_ids[0])} />
-          </div>
-        ))}
-        <div className="col">
-          <List items={genres} title="Genres"/>
-        </div>
-      </div>
-      <div className="row">
-          <MovieDetail movie={movies[0]} genre={findGenre(movies[0].genre_ids[0])} />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/:id">
+          <MovieDetail  />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
