@@ -1,4 +1,6 @@
-const movies = [
+import { Movie } from "../movies/movie.model";
+
+const MOVIES: Movie[] = [
   {
     poster_path: null,
     adult: false,
@@ -340,4 +342,4 @@ const movies = [
   }
 ];
 
-export default movies;
+export default MOVIES;
