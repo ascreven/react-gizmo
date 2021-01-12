@@ -4,6 +4,7 @@ import movies from "./mock/movies.mock";
 import genres from "./mock/genres.mock";
 import Card from "./shared/card/Card";
 import List from "./shared/list/List";
+import MovieDetail from "./shared/moviedetail/MovieDetail";
 import {find} from "lodash";
 
 
@@ -24,6 +25,9 @@ function App() {
         <div className="col">
           <List items={genres} title="Genres"/>
         </div>
+      </div>
+      <div className="row">
+          <MovieDetail movie={movies[0]} genre={findGenre(movies[0].genre_ids[0])} />
       </div>
     </div>
   );
