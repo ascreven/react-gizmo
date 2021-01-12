@@ -1,6 +1,7 @@
 @import "../../styles/libraries";
 
 .card {
+  color: $body-color;
   font-weight: 600;
   .card-img-overlay{
     display: flex;
