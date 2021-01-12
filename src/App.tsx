@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import MovieDetail from "./movies/movie-detail/movie-detail";
 
 import "./App.scss";
 import Home from "./pages/Home";
@@ -14,15 +15,11 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/:id">
-          <MovieComponent />
+          <MovieDetail  />
         </Route>
       </Switch>
     </BrowserRouter>
   );
-}
-
-function MovieComponent() {
-  return <div>MOVIE PAGE</div>;
 }
 
 export default App;

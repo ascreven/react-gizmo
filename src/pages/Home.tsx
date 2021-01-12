@@ -4,13 +4,13 @@ import {find} from "lodash";
 import List from '../shared/list/List';
 import Card from '../shared/card/Card';
 import MOVIES from '../mock/movies.mock';
-import genres from '../mock/genres.mock';
+import GENRES from '../mock/genres.mock';
 import { Movie } from '../movies/movie.model';
 
 function Home() {
 
   const findGenre = (id:  Number) => {
-    const genre = find(genres, ['id', id]);
+    const genre = find(GENRES, ['id', id]);
     return genre ? genre.name : null;
   };
 
@@ -29,7 +29,7 @@ function Home() {
                 </div>
             ))}
             <div className="col">
-                <List items={genres} title="Genres"/>
+                <List items={GENRES} title="Genres"/>
             </div>
         </div>
   </div>
