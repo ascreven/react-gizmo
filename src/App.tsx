@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/:id">
+        <Route path="/:id" >
           <MovieDetail  />
         </Route>
       </Switch>
