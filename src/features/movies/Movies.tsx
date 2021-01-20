@@ -26,7 +26,6 @@ function Movies() {
           {movies.map((movie: any) => (
             <div className="col-3" key={movie.id}>
               <Link to={`/movies/${movie.id}`}>
-                <h2>{movie.id}</h2>
                 <Card
                   title={movie.title}
                   score={movie.vote_average}
@@ -36,9 +35,12 @@ function Movies() {
             </div>
           ))}
         </Route>
-        <Route path={`${path}/:id`}>
-          <MovieDetail />
-        </Route>
+
+        <Route path={`${path}/:id`}
+                  render={(routeProps: any) => (
+                    <MovieDetail {...routeProps} />
+              )}
+            />
       </Switch>
     </div>
   );

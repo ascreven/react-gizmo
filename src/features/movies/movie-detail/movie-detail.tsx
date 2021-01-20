@@ -5,8 +5,9 @@ import GENRES from "../../../mock/genres.mock";
 import Spinner from "../../../shared/Spinner";
 import "./movie-detail.scss";
 
-function MovieDetail() {
-  const { data: movie, loading, error } = useFetch(`movies/654`);
+function MovieDetail(props: any) {
+  const id = props.match.params.id;
+  const { data: movie, loading, error } = useFetch(`movies/${id}`);
 
   if (loading) return <Spinner />;
   if (error) throw error;
