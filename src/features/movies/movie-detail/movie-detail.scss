@@ -1,30 +1,30 @@
-@import "../../styles/libraries";
+@import "../../../styles/libraries";
 
-.moviedetail {
+.movie-detail {
   font-weight: 600;
   color: black;
-  .moviedetail__img{
+  .movie-detail__img {
     height: 300px;
     width: auto;
   }
-  .moviedetail__info {
+  .movie-detail__info {
     justify-content: flex-start;
     padding-top: 20px;
   }
-  .moviedetail__title {
+  .movie-detail__title {
     font-size: 1.5rem;
     margin: auto 0;
   }
-  .moviedetail__subtitle {
+  .movie-detail__subtitle {
     text-transform: uppercase;
   }
   .badge {
     padding: 8px;
   }
-  .moviedetail__genre {
+  .movie-detail__genre {
     font-size: $font-size-sm;
   }
-  .moviedetail__button {
+  .movie-detail__button {
     margin: 20px 0;
     background-color: black;
     color: white;

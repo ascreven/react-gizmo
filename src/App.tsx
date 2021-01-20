@@ -1,23 +1,28 @@
-import React from "react";
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from "react-router-dom";
-import MovieDetail from "./movies/movie-detail/movie-detail";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "./App.scss";
 import Home from "./pages/Home";
+import Movies from "./features/movies/Movies";
+import Header from "./layout/Header";
+import Genres from "./features/genres/Genres";
 
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:id">
-          <MovieDetail  />
-        </Route>
-      </Switch>
+      <Header />
+      <div className="container-fluid">
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/movies">
+            <Movies />
+          </Route>
+          <Route path="/genres">
+            <Genres />
+          </Route>
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }
