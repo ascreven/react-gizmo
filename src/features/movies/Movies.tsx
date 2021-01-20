@@ -10,7 +10,7 @@ import MovieDetail from "./movie-detail/movie-detail";
 
 function Movies() {
   const { data: movies, loading, error } = useFetch("movies");
-  let { path, url } = useRouteMatch();
+  let { path } = useRouteMatch();
 
   const findGenre = (id: Number) => {
     const genre = find(GENRES, ["id", id]);
@@ -27,6 +27,7 @@ function Movies() {
             <div className="col-3" key={movie.id}>
               <Link to={`/movies/${movie.id}`}>
                 <Card
+                  img={movie.backdrop_path}
                   title={movie.title}
                   score={movie.vote_average}
                   genre={findGenre(movie.genre_ids[0])}
