@@ -5,16 +5,14 @@ import MOVIES from "../../mock/movies.mock";
 import React from "react";
 import Movies from "../movies/Movies";
 import { find } from "lodash";
+import GENRES from "../../mock/genres.mock";
 
 function Genres() {
-  const { data: genres, loading, error } = useFetch("genres");
   const [activeGenre, setActiveGenre] = React.useState(0);
-
-  if (error) throw error;
-  if (loading) return <Spinner />;
+  const genres = GENRES;
 
   const findGenre = (id: Number) => {
-    
+
     const genre = find(genres, ["id", id]);
     return genre ? genre.name : null;
   };

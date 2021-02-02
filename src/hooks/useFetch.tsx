@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
+const apiKey = process.env.REACT_APP_MOVIEDB_KEY;
 
 export default function useFetch(url: string): any {
   const [data, setData] = useState(null);
@@ -10,10 +11,10 @@ export default function useFetch(url: string): any {
   useEffect(() => {
     async function init() {
       try {
-        const response = await fetch(baseUrl + url);
+        const response = await fetch(`${baseUrl}${url}?api_key=${apiKey}`);
         if (response.ok) {
           const json = await response.json();
-          setData(json);
+          setData(json.results);
         } else {
           throw response;
         }

@@ -9,7 +9,8 @@ import Spinner from "../../shared/Spinner";
 import MovieDetail from "./movie-detail/movie-detail";
 
 function Movies() {
-  const { data: movies, loading, error } = useFetch("movies");
+  const { data: movies, loading, error } = useFetch("discover/movie");
+
   let { path } = useRouteMatch();
 
   const findGenre = (id: Number) => {
