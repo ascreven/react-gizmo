@@ -1,17 +1,21 @@
 import React from "react";
 import "./List.scss";
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function List(props: any) {
+
   return (
     <div className="list">
-      <ul className="list-group">
-        <li className="list-group-item list-group-item-title">{props.title}</li>
+      <ListGroup className="list-group">
+        <ListGroup.Item className="list-group-item-title">
+          {props.title}
+        </ListGroup.Item>
         {props.items.map((item: any) => (
-          <li className="list-group-item" key={item.id}>
+          <ListGroup.Item action onClick={() => props.onItemSelect(item.id)}>
             {item.name}
-          </li>
+          </ListGroup.Item>
         ))}
-      </ul>
+      </ListGroup>
     </div>
   );
 }
