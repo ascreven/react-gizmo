@@ -31,7 +31,7 @@ function Genres() {
         <List items={genres} title="Genres" onItemSelect={setActiveGenre}/>
       </div>
       <div className="col-6">
-        <p>{activeGenre}</p>
+        <p>{activeGenre != 0 ? findGenre(activeGenre) : "Movies"}</p>
         <Movies></Movies>
       </div>
     </div>
