@@ -15,6 +15,11 @@ export default function Header() {
               </NavLink>
             </li>
             <li className="nav-item">
+              <NavLink to="/shows" activeClassName="active">
+                <span className="nav-link">Shows</span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
               <NavLink to="/genres" activeClassName="active">
                 <span className="nav-link">Genres</span>
               </NavLink>

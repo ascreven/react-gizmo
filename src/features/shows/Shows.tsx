@@ -5,25 +5,25 @@ import axios from "axios";
 
 import GENRES from "../../mock/genres.mock";
 import Card from "../../shared/card/Card";
-import MovieDetail from "./movie-detail/movie-detail";
+import ShowDetail from "./show-detail/show-detail";
 import getMovieDBCallUrl from "../../services/movieDB.service";
 
-function Movies() {
-  const url = getMovieDBCallUrl(`discover/movie`);
-  const [movies, setMovies] = useState([]);
+function Shows() {
+  const url = getMovieDBCallUrl(`discover/tv`);
+  const [shows, setShows] = useState([]);
 
-  const loadMovies = useCallback(() => {
+  const loadShows = useCallback(() => {
     axios.get(url, {params: {
       sort_by: 'popularity.desc',
       certification_country: 'US'
     }}).then((response: any) => {
-      setMovies(response.data.results);
+      setShows(response.data.results);
     });
   }, []);
 
   useEffect(() => {
-    loadMovies();
-  }, [loadMovies]);
+    loadShows();
+  }, [loadShows]);
 
   let { path } = useRouteMatch();
 
@@ -34,28 +34,31 @@ function Movies() {
 
   return (
     <div className="row">
+      <div className="col-12">
+        <h1>Shows</h1>
+      </div>
       <Switch>
         <Route exact path={path}>
-          {movies.map((movie: any) => (
-            <div className="col-3" key={movie.id}>
+          {shows.map((show: any) => (
+            <div className="col-3" key={show.id}>
               <Link to={{
-                pathname:`/movies/${movie.id}`,
+                pathname:`/Shows/${show.id}`,
                 state: {
-                  imgSrc: movie.poster_path,
-                  title: movie.title,
-                  originalTitle: movie.original_title,
-                  score: movie.vote_average,
-                  releaseDate: movie.release_date,
-                  overview: movie.overview,
-                  video: movie.video,
-                  genre: findGenre(movie.genre_ids[0])
+                  imgSrc: show.poster_path,
+                  title: show.name,
+                  originalTitle: show.original_title,
+                  score: show.vote_average,
+                  releaseDate: show.release_date,
+                  overview: show.overview,
+                  video: show.video,
+                  genre: findGenre(show.genre_ids[0])
                 }
                 }} >
                 <Card
-                  img={movie.backdrop_path}
-                  title={movie.title}
-                  score={movie.vote_average}
-                  genre={findGenre(movie.genre_ids[0])}
+                  img={show.backdrop_path}
+                  title={show.title}
+                  score={show.vote_average}
+                  genre={findGenre(show.genre_ids[0])}
                 />
               </Link>
             </div>
@@ -64,7 +67,7 @@ function Movies() {
 
         <Route path={`${path}/:id`}
                   render={(routeProps: any) => (
-                    <MovieDetail {...routeProps} />
+                    <ShowDetail {...routeProps} />
               )}
             />
       </Switch>
@@ -72,4 +75,4 @@ function Movies() {
   );
 }
 
-export default Movies;
+export default Shows;

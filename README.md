@@ -1,3 +1,7 @@
+## TODO
+- filtering by watch provider, min vote count
+- sort by rating (vote count and vote average)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
