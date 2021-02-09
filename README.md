@@ -1,6 +1,8 @@
 ## TODO
 - filtering by watch provider, min vote count
 - sort by rating (vote count and vote average)
+- search
+- container components
 
 # Getting Started with Create React App
 

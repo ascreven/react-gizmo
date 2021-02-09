@@ -7,22 +7,31 @@ import GENRES from "../../mock/genres.mock";
 import Card from "../../shared/card/Card";
 import MovieDetail from "./movie-detail/movie-detail";
 import getMovieDBCallUrl from "../../services/movieDB.service";
+import { IFilters } from "../filters/filters.model";
 
-function Movies() {
-  const url = getMovieDBCallUrl(`discover/movie`);
+type props = {
+  filters?: IFilters;
+};
+
+function Movies(props: props) {
+
   const [movies, setMovies] = useState([]);
 
-  const loadMovies = useCallback(() => {
-    axios.get(url, {params: {
+  const loadMovies = useCallback((filters?: IFilters | undefined) => {
+    const url = getMovieDBCallUrl(`discover/movie`);
+    const defaultParams = {
       sort_by: 'popularity.desc',
       certification_country: 'US'
-    }}).then((response: any) => {
+    };
+    const params = Object.assign({}, defaultParams, filters);
+
+    axios.get(url, {params: params}).then((response: any) => {
       setMovies(response.data.results);
     });
   }, []);
 
   useEffect(() => {
-    loadMovies();
+    loadMovies(props.filters);
   }, [loadMovies]);
 
   let { path } = useRouteMatch();

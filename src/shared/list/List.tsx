@@ -10,8 +10,8 @@ function List(props: any) {
         <ListGroup.Item className="list-group-item-title">
           {props.title}
         </ListGroup.Item>
-        {props.items.map((item: any) => (
-          <ListGroup.Item action onClick={() => props.onItemSelect(item.id)}>
+        {props.items.map((item: any, index: number) => (
+          <ListGroup.Item key={index} action onClick={() => props.onItemSelect(item.id)}>
             {item.name}
           </ListGroup.Item>
         ))}

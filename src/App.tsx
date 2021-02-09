@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Movies from "./features/movies/Movies";
 import Shows from "./features/shows/Shows";
 import Header from "./layout/Header";
-import Genres from "./features/genres/Genres";
+import Filters from "./features/filters/Filters";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
             <Shows />
           </Route>
           <Route path="/genres">
-            <Genres />
+            <Filters />
           </Route>
         </Switch>
       </div>
