@@ -20,17 +20,20 @@ function Movies(props: props) {
   const loadMovies = useCallback((filters?: IFilters | undefined) => {
     const url = getMovieDBCallUrl(`discover/movie`);
     const defaultParams = {
+      include_adult: false,
       sort_by: 'popularity.desc',
       certification_country: 'US'
     };
+    console.log(filters);
     const params = Object.assign({}, defaultParams, filters);
 
     axios.get(url, {params: params}).then((response: any) => {
       setMovies(response.data.results);
     });
-  }, []);
+  }, [props.filters]);
 
   useEffect(() => {
+    console.log(props.filters);
     loadMovies(props.filters);
   }, [loadMovies]);
 

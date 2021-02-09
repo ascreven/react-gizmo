@@ -5,4 +5,6 @@ export type Genre = {
 
 export type IFilters = {
     with_genres?: string;
+    with_watch_providers?: string;
+    watch_region?: string;
 }
