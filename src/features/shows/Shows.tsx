@@ -56,7 +56,7 @@ function Shows() {
                 }} >
                 <Card
                   img={show.backdrop_path}
-                  title={show.title}
+                  title={show.name}
                   score={show.vote_average}
                   genre={findGenre(show.genre_ids[0])}
                 />
