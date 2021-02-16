@@ -1,0 +1,39 @@
+@import "../../../styles/libraries";
+
+.show-detail {
+  font-weight: 600;
+  color: black;
+  .show-detail__img {
+    height: 300px;
+    width: auto;
+  }
+  .show-detail__info {
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+  .show-detail__title {
+    font-size: 1.5rem;
+    margin: auto 0;
+  }
+  .show-detail__subtitle {
+    text-transform: uppercase;
+  }
+  .badge {
+    padding: 8px;
+  }
+  .show-detail__genre {
+    font-size: $font-size-sm;
+  }
+  .show-detail__button {
+    margin: 20px 0;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px;
+    &:hover {
+      background-color: lightskyblue;
+      text-decoration: none;
+    }
+  }
+}

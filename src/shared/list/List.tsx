@@ -2,7 +2,15 @@ import React from "react";
 import "./List.scss";
 import ListGroup from 'react-bootstrap/ListGroup';
 
-function List(props: any) {
+type props = {
+  title: string,
+  items: any[], 
+  itemId: string, 
+  displayProperty: string,
+  onItemSelect: (selectedItem: number) => void;
+}
+
+function List(props: props) {
 
   return (
     <div className="list">
@@ -10,9 +18,9 @@ function List(props: any) {
         <ListGroup.Item className="list-group-item-title">
           {props.title}
         </ListGroup.Item>
-        {props.items.map((item: any) => (
-          <ListGroup.Item action onClick={() => props.onItemSelect(item.id)}>
-            {item.name}
+        {props.items.map((item: any, index: number) => (
+          <ListGroup.Item key={index} action onClick={() => props.onItemSelect(item[props.itemId])}>
+            {item[props.displayProperty]}
           </ListGroup.Item>
         ))}
       </ListGroup>
