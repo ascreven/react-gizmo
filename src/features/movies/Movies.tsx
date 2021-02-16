@@ -7,7 +7,7 @@ import GENRES from "../../mock/genres.mock";
 import Card from "../../shared/card/Card";
 import MovieDetail from "./movie-detail/movie-detail";
 import getMovieDBCallUrl from "../../services/movieDB.service";
-import { IFilters } from "../filters/filters.model";
+import { IFilters } from "../../containers/filters/filters.model";
 
 type props = {
   filters?: IFilters;
@@ -33,7 +33,6 @@ function Movies(props: props) {
   }, [props.filters]);
 
   useEffect(() => {
-    console.log(props.filters);
     loadMovies(props.filters);
   }, [loadMovies]);
 

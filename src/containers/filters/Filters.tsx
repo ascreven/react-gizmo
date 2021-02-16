@@ -2,10 +2,13 @@ import React from "react";
 import { find } from "lodash";
 
 import List from "../../shared/list/List";
-import Movies from "../movies/Movies";
+import Movies from "../../features/movies/Movies";
+import Shows from "../../features/shows/Shows";
 import GENRES from "../../mock/genres.mock";
 import WATCH_PROVIDERS from "../../mock/watchproviders.mock";
 import {IFilters} from './filters.model';
+import { BrowserRouter, Route } from "react-router-dom";
+import Switch from "react-bootstrap/esm/Switch";
 
 
 function Filters() {
@@ -24,7 +27,6 @@ function Filters() {
     const prevFilters = Object.assign({}, activeFilters);
     prevFilters.with_genres = e;
     setActiveFilters(prevFilters);
-    console.log(prevFilters);
   }
 
   const watchProviders = WATCH_PROVIDERS;
@@ -40,10 +42,10 @@ function Filters() {
     prevFilters.with_watch_providers = e;
     prevFilters.watch_region = "US";
     setActiveFilters(prevFilters);
-    console.log(prevFilters);
   }
 
   return (
+
     <div className="row">
       <div className="col-3">
         <List items={genres} itemId="id" displayProperty="name" title="Genres" onItemSelect={handleGenreChange}/>
@@ -51,7 +53,14 @@ function Filters() {
       </div>
       <div className="col-9">
         <h1>{activeFilters.with_genres ? findGenre(activeFilters.with_genres) : "Movies"} on {activeFilters.with_watch_providers ? findWatchProvider(activeFilters.with_watch_providers) : "Any Watch Providers"}</h1>
-        <Movies filters={activeFilters}></Movies>
+        <Switch>
+          <Route path="/movies">
+            <Movies filters={activeFilters}></Movies>
+          </Route>
+          <Route path="/shows">
+            <Shows />
+          </Route>
+        </Switch>
       </div>
     </div>
   );
