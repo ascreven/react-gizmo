@@ -3,40 +3,47 @@ import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import { find } from "lodash";
 import axios from "axios";
 
-import GENRES from "../../mock/genres.mock";
 import Card from "../../shared/card/Card";
 import ShowDetail from "./show-detail/show-detail";
 import getMovieDBCallUrl from "../../services/movieDB.service";
+import { IFilters } from "../../containers/filters/filters.model";
 
-function Shows() {
-  const url = getMovieDBCallUrl(`discover/tv`);
+type props = {
+  filters?: IFilters;
+  genres?: any[];
+};
+
+function Shows(props: props) {
   const [shows, setShows] = useState([]);
 
-  const loadShows = useCallback(() => {
-    axios.get(url, {params: {
+  const loadShows = useCallback((filters?: IFilters | undefined) => {
+    const url = getMovieDBCallUrl(`discover/tv`);
+    const defaultParams = {
+      include_adult: false,
       sort_by: 'popularity.desc',
       certification_country: 'US'
-    }}).then((response: any) => {
+    };
+    
+    const params = Object.assign({}, defaultParams, filters);
+
+    axios.get(url, {params: params}).then((response: any) => {
       setShows(response.data.results);
     });
-  }, []);
+  }, [props.filters]);
 
   useEffect(() => {
-    loadShows();
+    loadShows(props.filters);
   }, [loadShows]);
 
   let { path } = useRouteMatch();
 
   const findGenre = (id: Number) => {
-    const genre = find(GENRES, ["id", id]);
+    const genre: any = find(props.genres, ["id", id]);
     return genre ? genre.name : null;
   };
 
   return (
     <div className="row">
-      <div className="col-12">
-        <h1>Shows</h1>
-      </div>
       <Switch>
         <Route exact path={path}>
           {shows.map((show: any) => (

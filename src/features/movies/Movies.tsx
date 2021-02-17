@@ -3,7 +3,6 @@ import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import { find } from "lodash";
 import axios from "axios";
 
-import GENRES from "../../mock/genres.mock";
 import Card from "../../shared/card/Card";
 import MovieDetail from "./movie-detail/movie-detail";
 import getMovieDBCallUrl from "../../services/movieDB.service";
@@ -11,6 +10,7 @@ import { IFilters } from "../../containers/filters/filters.model";
 
 type props = {
   filters?: IFilters;
+  genres?: any[];
 };
 
 function Movies(props: props) {
@@ -24,7 +24,6 @@ function Movies(props: props) {
       sort_by: 'popularity.desc',
       certification_country: 'US'
     };
-    console.log(filters);
     const params = Object.assign({}, defaultParams, filters);
 
     axios.get(url, {params: params}).then((response: any) => {
@@ -39,7 +38,7 @@ function Movies(props: props) {
   let { path } = useRouteMatch();
 
   const findGenre = (id: Number) => {
-    const genre = find(GENRES, ["id", id]);
+    const genre = find(props.genres, ["id", id]);
     return genre ? genre.name : null;
   };
 

@@ -1,6 +1,6 @@
 export type Genre = {
-    id: number,
-    name: string
+    id?: number,
+    name?: string
 }
 
 export type IFilters = {

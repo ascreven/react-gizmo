@@ -1,25 +1,44 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { find } from "lodash";
 
 import List from "../../shared/list/List";
 import Movies from "../../features/movies/Movies";
 import Shows from "../../features/shows/Shows";
-import GENRES from "../../mock/genres.mock";
 import WATCH_PROVIDERS from "../../mock/watchproviders.mock";
 import {IFilters} from './filters.model';
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import Switch from "react-bootstrap/esm/Switch";
+import axios from "axios";
+import getMovieDBCallUrl from "../../services/movieDB.service";
 
 
 function Filters() {
 
   const initialFilters: IFilters = {};
   const [activeFilters, setActiveFilters] = React.useState(initialFilters);
-  const genres = GENRES;
+  const [genres, setGenres] = useState([]); 
+
+  const location = useLocation();
+  const path = location.pathname;
+
+  const loadGenres = useCallback(() => {
+    const genreCall = path.toString().includes("shows") ? "genre/tv/list" : "genre/movie/list";
+    const url = getMovieDBCallUrl(genreCall);
+    
+    axios.get(url, {params: {
+      language: 'en-US'
+    }}).then((response: any) => {
+      setGenres(response.data.genres);
+    });
+  }, [path]);
+
+  useEffect(() => {
+    loadGenres();
+  }, [loadGenres]);
 
   const findGenre = (id: string) => {
     const numberId = Number(id);
-    const genre = find(genres, ["id", numberId]);
+    const genre: any = find(genres, ["id", numberId]);
     return genre ? genre.name : null;
   };
 
@@ -52,13 +71,14 @@ function Filters() {
         <List items={watchProviders} itemId="provider_id" displayProperty="provider_name" title="Watch Providers" onItemSelect={handleWatchProviderChange}/>
       </div>
       <div className="col-9">
-        <h1>{activeFilters.with_genres ? findGenre(activeFilters.with_genres) : "Movies"} on {activeFilters.with_watch_providers ? findWatchProvider(activeFilters.with_watch_providers) : "Any Watch Providers"}</h1>
         <Switch>
           <Route path="/movies">
-            <Movies filters={activeFilters}></Movies>
+            <h1>{activeFilters.with_genres ? findGenre(activeFilters.with_genres) : "All"} Movies on {activeFilters.with_watch_providers ? findWatchProvider(activeFilters.with_watch_providers) : "Any Watch Providers"}</h1>
+            <Movies filters={activeFilters} genres={genres}></Movies>
           </Route>
           <Route path="/shows">
-            <Shows />
+            <h1>{activeFilters.with_genres ? findGenre(activeFilters.with_genres) : "All"} Shows on {activeFilters.with_watch_providers ? findWatchProvider(activeFilters.with_watch_providers) : "Any Watch Providers"}</h1>
+            <Shows filters={activeFilters} genres={genres}></Shows>
           </Route>
         </Switch>
       </div>
