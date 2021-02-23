@@ -10,12 +10,12 @@ export default function Header() {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink to="/movies" activeClassName="active">
+              <NavLink to="/movie" activeClassName="active">
                 <span className="nav-link">Movies</span>
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/shows" activeClassName="active">
+              <NavLink to="/tv" activeClassName="active">
                 <span className="nav-link">Shows</span>
               </NavLink>
             </li>

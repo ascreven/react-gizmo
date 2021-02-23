@@ -1,20 +1,20 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import './App.scss';
-import Filters from './containers/filters/Filters';
 import Header from './layout/Header';
 import Home from './pages/Home';
+import FeatureLandingPage from './pages/FeatureLandingPage';
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
         <div className="container-fluid">
-          <Filters />
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/:page" children={<FeatureLandingPage />} />
         </div>
       </Switch>
     </BrowserRouter>
