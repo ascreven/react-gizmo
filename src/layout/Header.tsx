@@ -19,11 +19,6 @@ export default function Header() {
                 <span className="nav-link">Shows</span>
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink to="/genres" activeClassName="active">
-                <span className="nav-link">Genres</span>
-              </NavLink>
-            </li>
           </ul>
         </div>
       </div>

@@ -1,32 +1,22 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import "./App.scss";
-import Home from "./pages/Home";
-import Movies from "./features/movies/Movies";
-import Shows from "./features/shows/Shows";
-import Header from "./layout/Header";
-import Filters from "./features/filters/Filters";
+import './App.scss';
+import Filters from './containers/filters/Filters';
+import Header from './layout/Header';
+import Home from './pages/Home';
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
-      <div className="container-fluid">
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/movies">
-            <Movies />
-          </Route>
-          <Route path="/shows">
-            <Shows />
-          </Route>
-          <Route path="/genres">
-            <Filters />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <div className="container-fluid">
+          <Filters />
+        </div>
+      </Switch>
     </BrowserRouter>
   );
 }
