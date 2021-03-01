@@ -1,4 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
+import { IRoute } from "../models/route.model";
+import { ROUTES } from "../routes";
 
 export default function Header() {
   return (
@@ -9,16 +11,13 @@ export default function Header() {
         </Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <NavLink to="/movie" activeClassName="active">
-                <span className="nav-link">Movies</span>
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/tv" activeClassName="active">
-                <span className="nav-link">Shows</span>
-              </NavLink>
-            </li>
+            {ROUTES.map((route: IRoute, index: number) => (
+              <li key={index} className="nav-item">
+                <NavLink to={route.path} activeClassName="active">
+                  <span className="nav-link">{route.title}</span>
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
