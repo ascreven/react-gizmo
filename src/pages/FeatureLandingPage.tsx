@@ -1,15 +1,13 @@
 import axios from "axios";
 import { find, merge } from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { IFilters } from "../containers/filters/filters.model";
-import MovieDetail from "../features/movies/movie-detail/movie-detail";
-import GENRES from "../mock/genres.mock";
+import { IMovieDBDiscoverFilters } from "../models/filter.model";
 import WATCH_PROVIDERS from "../mock/watchproviders.mock";
 import getMovieDBCallUrl from "../services/movieDB.service";
 import Card from "../shared/card/Card";
-import List from "../shared/list/List";
+import Filters from '../layout/Filters';
 
 type Props = {
   movieDbKey: string;
@@ -19,35 +17,87 @@ type Props = {
 function FeatureLandingPage(props: Props) {
   const { movieDbKey, title } = props;
 
-  const initialFilters: IFilters = {};
+  const initialFilters: IMovieDBDiscoverFilters = {
+    with_watch_providers: [],
+    with_genres: [],
+    watch_region: "US"
+  };
   const [activeFilters, setActiveFilters] = React.useState(initialFilters);
 
-  const genres = GENRES;
-  const handleGenreChange = (e: any) => {
-    const filters = Object.assign({}, activeFilters);
-    filters.with_genres = e;
-    setActiveFilters(filters);
+  const handleWatchProviderChange = (e: string) => {
+    // const filters = Object.assign({}, activeFilters);
+    // console.log(filters)
+    // filters.with_watch_providers.push(e)
+    // // filters.with_watch_providers = [e];
+
+    // setActiveFilters(filters);
   };
 
-  const watchProviders = WATCH_PROVIDERS;
+  const watchProviders = {
+    title: "Watch Providers",
+    displayProperty: "provider_name",
+    primaryKey: 'provider_id',
+    onToggleHandler: handleWatchProviderChange,
+    options:WATCH_PROVIDERS
+  };
+  const [filters, setFilters] = useState([watchProviders])
+
+  const [genres, setGenres] = useState([]);
+
+  const handleGenreChange = (e: any) => {
+    //  const prevFilters = Object.assign({}, activeFilters);
+    // console.log(prevFilters)
+    // setActiveFilters({...activeFilters, [todo.id]: todo});
+    let prevFilters = {...activeFilters};
+    const test = [...prevFilters.with_genres, e];
+    console.log(test)
+    setActiveFilters({...activeFilters, with_genres: test})
+
+
+    // const prevFilters = [...activeFilters.with_genres, e];
+    // console.log(currentGenres)
+    // currentGenres.push(e);
+    // setActiveFilte rs({...activeFilters, "with_genres": currentGenres})
+    // const prevGenres = Object.assign({}, activeFilters);
+
+    // filters.with_genres.push(e);
+    // setActiveFilters({
+    //   with_genres: [...activeFilters.with_genres, e]
+    // });
+  };
+
+  const loadGenres = useCallback(() => {
+    const genreCall = `genre/${movieDbKey}/list`;
+    const url = getMovieDBCallUrl(genreCall);
+
+    axios.get(url, {params: {
+      language: 'en-US'
+    }}).then((response: any) => {
+      const genreFilter = {
+        title: "Genres",
+        primaryKey: "id",
+        displayProperty: "name",
+        onToggleHandler: handleGenreChange,
+        options: response.data.genres
+      };
+      setFilters([...filters, genreFilter]);
+    });
+  }, []);
+
+  useEffect(() => {
+    loadGenres();
+  }, [loadGenres]);
 
   const findWatchProvider = (id: string) => {
     const numberId = Number(id);
-    const watchProvider = find(watchProviders, ["provider_id", numberId]);
+    const watchProvider = find(WATCH_PROVIDERS, ["provider_id", numberId]);
     return watchProvider ? watchProvider.provider_name : null;
-  };
-
-  const handleWatchProviderChange = (e: any) => {
-    const filters = Object.assign({}, activeFilters);
-    filters.with_watch_providers = e;
-    filters.watch_region = "US";
-    setActiveFilters(filters);
   };
 
   const [options, setOptions] = useState([]);
 
   const loadOptions = useCallback(
-    (activeFilters?: IFilters | undefined) => {
+    (activeFilters?: IMovieDBDiscoverFilters | undefined) => {
       const url = getMovieDBCallUrl(`discover/${movieDbKey}`);
       const defaultParams = {
         include_adult: false,
@@ -84,14 +134,15 @@ function FeatureLandingPage(props: Props) {
 
   const findGenre = (id: string) => {
     const numberId = Number(id);
-    const genre = find(genres, ["id", numberId]);
+    const genre: any = find(genres, ["id", numberId]);
     return genre ? genre.name : null;
   };
 
   return (
     <div className="row">
       <div className="col-3">
-        <List
+        <Filters sections={filters} />
+        {/* <List
           items={genres}
           itemId="id"
           displayProperty="name"
@@ -102,19 +153,19 @@ function FeatureLandingPage(props: Props) {
           items={watchProviders}
           itemId="provider_id"
           displayProperty="provider_name"
-          title="Watch Providers"
+          title="Watch  Providers"
           onItemSelect={handleWatchProviderChange}
-        />
+        /> */}
       </div>
       <div className="col-9">
         <div className="row">
           <div className="col-12">
-            <h1>
-              {activeFilters.with_genres
+            <h1> {title}
+              {/* {activeFilters.with_genres
                 ? findGenre(activeFilters.with_genres)
                 : "All"} {title} on {activeFilters.with_watch_providers
                 ? findWatchProvider(activeFilters.with_watch_providers)
-                : "Any Watch Providers"}
+                : "Any Watch Providers"} */}
             </h1>
           </div>
           {options.map((option: any) => (

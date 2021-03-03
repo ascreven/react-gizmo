@@ -7,24 +7,24 @@ import GENRES from "../../mock/genres.mock";
 import Card from "../../shared/card/Card";
 import MovieDetail from "./movie-detail/movie-detail";
 import getMovieDBCallUrl from "../../services/movieDB.service";
-import { IFilters } from "../../containers/filters/filters.model";
+import { IMovieDBDiscoverFilters } from "../../models/filter.model";
 
 type props = {
-  filters?: IFilters;
+  filters?: IMovieDBDiscoverFilters;
 };
 
 function Movies(props: props) {
 
   const [movies, setMovies] = useState([]);
 
-  const loadMovies = useCallback((filters?: IFilters | undefined) => {
+  const loadMovies = useCallback((filters?: IMovieDBDiscoverFilters | undefined) => {
     const url = getMovieDBCallUrl(`discover/movie`);
     const defaultParams = {
       include_adult: false,
       sort_by: 'popularity.desc',
       certification_country: 'US'
     };
-    console.log(filters);
+    
     const params = Object.assign({}, defaultParams, filters);
 
     axios.get(url, {params: params}).then((response: any) => {
