@@ -8,6 +8,7 @@ import WATCH_PROVIDERS from "../mock/watchproviders.mock";
 import getMovieDBCallUrl from "../services/movieDB.service";
 import Card from "../shared/card/Card";
 import Filters from '../layout/Filters';
+import { convertCompilerOptionsFromJson } from "typescript";
 
 type Props = {
   movieDbKey: string;
@@ -17,20 +18,29 @@ type Props = {
 function FeatureLandingPage(props: Props) {
   const { movieDbKey, title } = props;
 
-  const initialFilters: IMovieDBDiscoverFilters = {
-    with_watch_providers: [],
-    with_genres: [],
+  let initialFilters: IMovieDBDiscoverFilters = {
+    with_watch_providers: ["121"],
+    with_genres: ["12", "16"],
     watch_region: "US"
   };
-  const [activeFilters, setActiveFilters] = React.useState(initialFilters);
+  const [activeFilters, setActiveFilters] = useState(initialFilters);
 
-  const handleWatchProviderChange = (e: string) => {
+  const handleWatchProviderChange = (e: any) => {
     // const filters = Object.assign({}, activeFilters);
     // console.log(filters)
     // filters.with_watch_providers.push(e)
     // // filters.with_watch_providers = [e];
 
     // setActiveFilters(filters);
+
+    console.log(activeFilters);
+    const prevFilters = {...activeFilters};
+    const test = [...prevFilters.with_watch_providers, e.toString()];
+    console.log(test);
+    const newFilters = {...activeFilters, with_watch_providers: test};
+    console.log(newFilters);
+    setActiveFilters({...activeFilters, with_watch_providers: test});
+    console.log(activeFilters);
   };
 
   const watchProviders = {
@@ -45,25 +55,28 @@ function FeatureLandingPage(props: Props) {
   const [genres, setGenres] = useState([]);
 
   const handleGenreChange = (e: any) => {
-    //  const prevFilters = Object.assign({}, activeFilters);
-    // console.log(prevFilters)
-    // setActiveFilters({...activeFilters, [todo.id]: todo});
-    let prevFilters = {...activeFilters};
-    const test = [...prevFilters.with_genres, e];
-    console.log(test)
-    setActiveFilters({...activeFilters, with_genres: test})
-
-
-    // const prevFilters = [...activeFilters.with_genres, e];
-    // console.log(currentGenres)
-    // currentGenres.push(e);
-    // setActiveFilte rs({...activeFilters, "with_genres": currentGenres})
-    // const prevGenres = Object.assign({}, activeFilters);
-
-    // filters.with_genres.push(e);
-    // setActiveFilters({
-    //   with_genres: [...activeFilters.with_genres, e]
-    // });
+    const id: String = e.toString();
+    console.log("current activeFilters:");
+    console.log(activeFilters);
+    const prevGenres = [...activeFilters.with_genres];
+    if (prevGenres.includes(id)) {
+      var index = prevGenres.indexOf(id)
+      if (index !== -1) {
+        prevGenres.splice(index, 1);
+        console.log(prevGenres);
+        setActiveFilters({...activeFilters, with_genres: prevGenres});
+        console.log(activeFilters);
+      }
+    } else {
+      const test = [...prevGenres, id];
+      console.log(test);
+      const temp: IMovieDBDiscoverFilters = {...activeFilters, with_genres: test};
+      console.log("temp:");
+      console.log(temp);
+      setActiveFilters(temp);
+      console.log("activeFilters after set:");
+      console.log(activeFilters);
+    }
   };
 
   const loadGenres = useCallback(() => {
